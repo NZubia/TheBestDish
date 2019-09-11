@@ -38,6 +38,14 @@ class OrderClass {
 
     }
 
+    applyDisccontToOrder() {
+
+    }
+
+    applyPromotionsToOrder(promotionCode) {
+
+    }
+
 }
 
 //Load class
