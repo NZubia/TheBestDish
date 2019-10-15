@@ -3,9 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const dishesRoutes = require('./routes/dish.routes');
+const orderRoutes = require('./routes/order.routes');
+
+// ============
+// Database configuration
+// ============
+// Compatibility of MongoDB >=3.6 with Mongoose < v5.0.0
+mongoose.plugin(schema => {
+  schema.options.usePushEach = true
+});
+
+// Native promises in Mongoose
+mongoose.Promise = Promise;
+
+// Connect
+mongoose.connect("mongodb://127.0.0.1:27017/the_best_dish", {useNewUrlParser: true});
+mongoose.connection.on("open", function () {
+  console.log("MongoDB connection opened");
+});
+
 
 var app = express();
 
@@ -21,6 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/dishes', dishesRoutes);
+app.use('/order', orderRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
