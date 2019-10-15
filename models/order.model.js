@@ -8,7 +8,8 @@ const orderSchema = new Schema({
       required: true
     },
     dishes: {
-        type: [Object],
+        type: [mongoose.Schema.ObjectId],
+        ref: 'Dish',
         required: true,
         default: []
     },
@@ -19,40 +20,8 @@ const orderSchema = new Schema({
     }
 });
 
-/**
- * Class for the Order model.
- */
-class OrderClass {
-    constructor() {
-    }
-
-    showOrder(){}
-
-    getAmountOrder(){}
-
-    addDishToOrder(dish){
-
-    }
-
-    removeDishFromOrder(dish){
-
-    }
-
-    applyDisccontToOrder() {
-
-    }
-
-    applyPromotionsToOrder(promotionCode) {
-
-    }
-
-}
-
-//Load class
-orderSchema.loadClass(OrderClass);
-
 let OrderModel = mongoose.model('Order', orderSchema, 'order');
 
 module.exports = {
     OrderModel
-}
+};
